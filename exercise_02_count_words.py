@@ -28,4 +28,24 @@ def count_words(filename):
         # archivo contiene: "Hola mundo hola\nmundo python\n"
         count_words("texto.txt") -> {"hola": 2, "mundo": 2, "python": 1}
     """
-    pass  # Reemplazar con tu implementación
+
+    # Lanzar FileNotFoundError con raise
+    import os
+    if not os.path.exists(filename):
+        raise FileNotFoundError("No existe el archivo")
+
+    dicc = {}
+
+    with open(filename, "r") as archivo:
+        for line in archivo:
+            line = line.strip()
+            line = line.lower()
+            palabras = line.split() #si no le pongo nada en el parentesis separa las palabras con espacios en blanco
+
+            for palabra in palabras:
+                if palabra in dicc:
+                    dicc[palabra] += 1
+                else:
+                    dicc[palabra] = 1
+
+        return dicc

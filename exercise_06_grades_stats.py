@@ -1,4 +1,5 @@
 # Ejercicio 6 - Estadísticas de notas por estudiante
+from numpy.ma.core import minimum
 
 
 def grades_stats(filename):
@@ -34,4 +35,37 @@ def grades_stats(filename):
             "Cami": (10.0, 10.0, 10.0),
         }
     """
-    pass  # Reemplazar con tu implementación
+
+    try:
+        resultados = {}
+
+        with open(filename, "r") as file:
+
+            for linea in file:
+                linea = linea.strip()
+
+                if linea == "":
+                    continue
+
+                partes = linea.split(":")
+                nombre = partes[0]
+                str_notas = partes[1]
+
+                lista_notas_texto = str_notas.split(",")
+
+                notas_numeros = []
+                for nota in lista_notas_texto:
+                    notas_numeros.append(float(nota))
+
+                avg = sum(notas_numeros) / len(notas_numeros)
+                maxim = max(notas_numeros)
+                minim = min(notas_numeros)
+
+                resultados[nombre] = (avg, maxim, minim)
+
+        return resultados
+
+    except FileNotFoundError:
+        raise FileNotFoundError ("El archivo no fue encontrado")
+
+

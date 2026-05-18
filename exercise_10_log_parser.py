@@ -42,4 +42,31 @@ def parse_log(filename):
             "WARN": ["lento"],
         }
     """
-    pass  # Reemplazar con tu implementación
+
+    dicc = {}
+
+    import os
+    if not os.path.exists(filename):
+        raise FileNotFoundError("El archivo no existe")
+
+    with open(filename, "r") as file:
+        for linea in file:
+            linea = linea.strip()
+
+            if linea == "":
+                continue
+
+            if ":" not in linea:
+                raise ValueError ("invalid log line")
+
+            partes = linea.split(":", 1)
+
+            nombre = partes[0].strip()
+            palabra = partes[1].strip()
+
+            if nombre not in dicc:
+                dicc[nombre] = []
+
+            dicc[nombre].append(palabra)
+
+    return dicc

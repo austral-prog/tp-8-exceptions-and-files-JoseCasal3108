@@ -31,7 +31,33 @@ def read_sales(filename):
             "producto2": [200.0],
         }
     """
-    pass  # Reemplazar con tu implementación
+
+    # Lanzar FileNotFoundError con raise
+
+    import os
+    if not os.path.exists(filename):
+        raise FileNotFoundError("No existe el archivo")
+
+    dicc = {}
+
+    with open(filename, "r") as archivo:
+        content = archivo.read()
+        content = content.strip()
+
+        pares = content.split(";")
+
+        for par in pares:
+            if par != "":
+                venta = par.split(":")
+                producto = venta[0]
+                monto = float(venta[1])
+
+                if producto in dicc:
+                    dicc[producto].append(monto)
+                else:
+                    dicc[producto] = [monto]
+
+    return dicc
 
 
 def process_sales(data):
@@ -53,4 +79,10 @@ def process_sales(data):
         process_sales({"producto1": [100.0, 150.0]})
         # imprime: "producto1: ventas totales $250.00, promedio $125.00"
     """
-    pass  # Reemplazar con tu implementación
+
+    for k, v in data.items():
+        suma = sum(v)
+        avg = suma / len(v)
+
+        print(f"{k}: ventas totales ${suma:.2f}, promedio ${avg:.2f}")
+

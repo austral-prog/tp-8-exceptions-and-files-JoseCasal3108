@@ -1,6 +1,4 @@
 # Ejercicio 6 - Estadísticas de notas por estudiante
-from numpy.ma.core import minimum
-
 
 def grades_stats(filename):
     """
